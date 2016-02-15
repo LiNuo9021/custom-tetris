@@ -9,6 +9,7 @@ Game.Defender.Human.prototype.destroy = function() {
 	Game.Player.prototype.destroy.call(this);
 }
 
+//人工防守时，所有的键位都在这里定义
 Game.Defender.Human.prototype.handleEvent = function(e) {
 	switch (e.keyCode) {
 		case 37: /* left */

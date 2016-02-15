@@ -6,6 +6,7 @@ Game.App = function() {
 	this._defender = null;
 
 	this._dom = {
+		//知识点：querySelector
 		left: document.querySelector("#left"),
 		right: document.querySelector("#right"),
 		attacker: document.querySelector("#attacker"),
@@ -23,6 +24,7 @@ Game.App = function() {
 	}
 
 	this._dom.connect.disabled = false;
+	//知识点：localStorage
 	this._dom.server.value = localStorage.getItem("tetris.server") || "ondras";
 	var slug = "";
 	for (var i=0;i<4;i++) {
@@ -38,16 +40,19 @@ Game.App = function() {
 	this._updateMode();
 	this._updateDescription();
 
+	//知识点：addEventListener
 	this._select.attacker.addEventListener("change", this);
 	this._select.defender.addEventListener("change", this);
 
 	this._createBackground();
 	
-	this._dom.connect.addEventListener("click", this);
+	this._dom.connect.addEventListener("click", this);//click时会触发该对象原型上的handleEvent函数
 	this._dom.play.addEventListener("click", this);
 	this._dom.play.focus();
 }
 
+//知识点：prototype.handleEvent
+//点击首页play或者切换角色，都会执行这里
 Game.App.prototype.handleEvent = function(e) {
 	switch (e.type) {
 		case "change":
@@ -63,6 +68,7 @@ Game.App.prototype.handleEvent = function(e) {
 
 				case this._dom.play:
 					this._dom.setup.classList.add("playing");
+					//知识点：setTimeout()
 					setTimeout(this._start.bind(this), 500);
 				break;
 			}

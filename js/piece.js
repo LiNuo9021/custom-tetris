@@ -1,14 +1,18 @@
 Game.Piece = function(type) {
+	//知识点：this.constructor
 	var def = this.constructor.DEF[type];
 	if (!def) { throw new Error("Piece '" + type + "' does not exist"); }
 
 	this.type = type;
 	this.xy = new XY();
 	this.node = null;
-	this.cells = {};
+	this.cells = {};//{0,0: Game.Cell , ...}格式的对象
 	this.id = Math.random();
 
+	//循环该滑块中的所有坐标，把滑块的cell对象装到Piece对象里，作为它的属性
 	def.cells.forEach(function(xy) {
+		//xy初始是{x:0,y:0}，type是传入的滑块字符串
+		//cell对象的属性为xy、node、type
 		var cell = new Game.Cell(xy, type);
 		this.cells[xy] = cell;
 	}, this);

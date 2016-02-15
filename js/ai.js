@@ -3,11 +3,13 @@ Game.AI = {}
 Game.AI.findBestPosition = function(pit, piece) {
 	pit = pit.clone();
 	piece = piece.clone();
-	piece.center();
+	piece.center();//将滑块定位到游戏区域中间，此时piece的XY属性有非0值
 	
-	/* shift leftwards */
+	//不断左移调整
 	var left = new XY(-1, 0);
-	while (piece.fits(pit)) { piece.xy = piece.xy.plus(left); }
+	while (piece.fits(pit)) { 
+		piece.xy = piece.xy.plus(left); 
+	}
 	piece.xy = piece.xy.minus(left);
 	
 	/* move rightwards, test scores */
@@ -64,7 +66,15 @@ Game.AI.findBestPositionRotation = function(pit, piece) {
 
 Game.AI.scoreTypes = function(pit, types) {
 	var scores = {};
+	//知识点：forEach()
 	types.forEach(function(type) {
+		/*
+		Piece对象包含如下属性：
+			cells: Object {0,0: Game.Cell , ...}格式的对象
+			id: 0.18609256064519286
+			node: null
+			type: "i"
+		*/
 		var piece = new Game.Piece(type);
 		scores[type] = this.findBestPositionRotation(pit, piece).score;
 	}, this);

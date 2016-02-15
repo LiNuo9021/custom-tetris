@@ -1,7 +1,10 @@
 Game.Attacker.AI = function(engine) {
-	Game.Player.call(this, engine);
+	//知识点：call()
+	Game.Player.call(this, engine);//给该对象赋引擎
 	this._lastType = "";
-	this._interval = setInterval(this._poll.bind(this), Game.INTERVAL_ATTACKER);
+	//知识点：setInterval()
+	//知识点：bind()
+	this._interval = setInterval(this._poll.bind(this), Game.INTERVAL_ATTACKER);//周期性下降滑块
 }
 
 Game.Attacker.AI.prototype = Object.create(Game.Player.prototype);
@@ -13,17 +16,26 @@ Game.Attacker.AI.prototype.destroy = function() {
 }
 
 Game.Attacker.AI.prototype._poll = function() {
-	var next = this._engine.getNextType();
+	var next = this._engine.getNextType();//第一次为""
 	if (next) { return; }
 
+	//知识点：Object.keys()
+	//avail是字符串数组，元素是每个滑块对于的字符串："+" "o" "i"
 	var avail = Object.keys(this._engine.getAvailableTypes());
 
 	/* remove last used type, if possible */
-	var index = avail.indexOf(this._lastType);
+	var index = avail.indexOf(this._lastType);//第一次为-1，因为_lastType为""
 	if (index > -1 && avail.length > 1) { avail.splice(index, 1); }
 
+	/*
+	20行10列的游戏空间，包含4个对象：
+	cells：Object，初始为空
+	nodes：div.pit
+	cols：20个元素的数组，元素初始都为0
+	rows：10个元素的数组，元素初始都为0
+	*/
 	var pit = this._engine.pit;
-	var current = this._engine.getPiece();
+	var current = this._engine.getPiece();//第一次为null
 
 	if (current) { /* drop current piece based on its expected position/rotation */
 		pit = pit.clone();
@@ -48,7 +60,8 @@ Game.Attacker.AI.prototype._poll = function() {
 		if (score == worstScore) { worstTypes.push(type); }
 	}
 
+	//随机获取方块
 	var type = worstTypes.random();
 	this._lastType = type;
-	this._engine.setNextType(type);
+	this._engine.setNextType(type);//向_availableTypes放置滑块及其数量
 }

@@ -1,0 +1,56 @@
+-文件结构
+game.js 定义游戏全局变量Game，所有的对象都是它的属性
+	
+app.js
+	首页元素控制、游戏模式
+	切换角色/开始游戏，都会触发Game.App.prototype.handleEvent
+
+engine.js 游戏引擎
+
+player.js 为角色加入engine
+
+ai.js
+
+gallery.js 右侧剩余滑块
+
+attacker.ai.js 
+	使用setInterval循环调用
+
+defender.human.js 人的防守角色
+	包含各种键盘事件：旋转，左移，右移，下坠
+
+pit.js 20行10列的游戏空间
+
+cell.js 滑块的每个组成部分
+	
+piece.js 滑块的组成（cell）、颜色、类型
+
+
+
+-代码结构
+--点击Play后，到Game.Attacker.AI.prototype._poll
+Game.App.prototype.handleEvent（因为new Game.app()时，为play按钮绑定了监听器）
+	出现游戏区域
+		Game.App.prototype._start（因为handleEvent中的setTimeout(this._start.bind(this), 500);）
+			new Game.Engine()
+			new Game.Gallery(this)
+			new Game.Pit()
+			this._createDefender(this._select.defender.value)
+				new防守对象
+					获取键盘事件							
+			this._createAttacker(this._select.attacker.value)
+				new 进攻对象
+					setInterval(this._poll.bind(this), Game.INTERVAL_ATTACKER)这里是单线程，会等待_start方法执行完毕后，再执行Attacker的_poll
+						Game.Attacker.AI.prototype._poll
+
+
+--Game.Attacker.AI.prototype._poll到滑块落下
+Game.AI.scoreTypes(pit, avail)
+	new Game.Piece(type)
+		var cell = new Game.Cell(xy, type);
+		this.cells[xy] = cell;
+	scores[type] = this.findBestPositionRotation(pit, piece).score;
+		this.findBestPosition(pit, tmpPiece)
+
+
+

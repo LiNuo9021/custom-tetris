@@ -110,7 +110,7 @@ Game.Engine.prototype._useNextType = function() {
 	}
 	if (!Object.keys(this._availableTypes).length) { this._refreshAvailable(); }
 	
-	var nextPiece = new Game.Piece(this._nextType);
+	var nextPiece = new Game.Piece(this._nextType);//构造方块
 	nextPiece.center();
 	nextPiece.build(this.pit.node);
 
