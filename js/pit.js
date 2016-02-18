@@ -92,6 +92,7 @@ Game.Pit.prototype.getScore = function() {
 	return W[0]*S[0] + W[1]*S[1] + W[2]*S[2] + W[3]*S[3] + W[4]*S[4] + W[5]*S[5];
 }
 
+//改变pic的rows和cols数组中元素的值
 Game.Pit.prototype.drop = function(piece) {
 	var gravity = new XY(0, -1);
 	while (piece.fits(this)) {
@@ -156,5 +157,5 @@ Game.Pit.prototype._cleanup = function() {
 		j--;
 	}
 
-	return result;
+	return result;//第一次为0
 }

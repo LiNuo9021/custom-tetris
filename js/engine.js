@@ -29,9 +29,9 @@ Game.Engine.prototype.setNextType = function(nextType) {
 	if (avail < 1) { return; }
 
 	this._nextType = nextType;
-	if (!this._piece) { 
+	if (!this._piece) { //第一次执行会走这里
 		this._useNextType(); 
-	} else {
+	} else { //第二次执行会走这里，会将下一个滑块在仓库区域加红
 		this.gallery.sync();
 	}
 	return this;
@@ -101,19 +101,24 @@ Game.Engine.prototype._refreshAvailable = function() {
 	}
 }
 
+//知识点：prototype
 Game.Engine.prototype._useNextType = function() {
+	//_availableTypes存放着每种滑块的数量，这里做－1操作
 	var avail = this._availableTypes[this._nextType]-1;
 	if (avail) {
 		this._availableTypes[this._nextType] = avail;
 	} else {
 		delete this._availableTypes[this._nextType];
 	}
-	if (!Object.keys(this._availableTypes).length) { this._refreshAvailable(); }
+	if (!Object.keys(this._availableTypes).length) { 
+		this._refreshAvailable(); 
+	}
 	
-	var nextPiece = new Game.Piece(this._nextType);//构造方块
+	var nextPiece = new Game.Piece(this._nextType);//构造滑块
 	nextPiece.center();
-	nextPiece.build(this.pit.node);
+	nextPiece.build(this.pit.node);//这句话之后，滑块构造完毕并出现在游戏区域正中
 
+	//如果滑块在游戏区域内，则开始游戏；否则游戏结束
 	if (nextPiece.fits(this.pit)) {
 		this._piece = nextPiece;
 		this._nextType = "";
@@ -130,6 +135,7 @@ Game.Engine.prototype._setScore = function(score) {
 	document.querySelector("#score").innerHTML = score;
 }
 
+//滑块的bottom－25px
 Game.Engine.prototype._tick = function() {
 	var gravity = new XY(0, -1);
 	this._piece.xy = this._piece.xy.plus(gravity);
@@ -149,6 +155,7 @@ Game.Engine.prototype._setPlaying = function(playing) {
 	document.querySelector("#status").innerHTML = (playing ? "Playing" : "GAME OVER");
 }
 
+//滑块下落的函数
 Game.Engine.prototype._start = function() {
 	if (this._interval) { return; }
 	this._interval = setInterval(this._tick.bind(this), Game.INTERVAL_ENGINE);

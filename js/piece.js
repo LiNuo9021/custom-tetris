@@ -9,7 +9,7 @@ Game.Piece = function(type) {
 	this.cells = {};//{0,0: Game.Cell , ...}格式的对象
 	this.id = Math.random();
 
-	//循环该滑块中的所有坐标，把滑块的cell对象装到Piece对象里，作为它的属性
+	//循环该滑块中的所有坐标，把滑块的cell对象装到piece对象里，作为它的属性cells
 	def.cells.forEach(function(xy) {
 		//xy初始是{x:0,y:0}，type是传入的滑块字符串
 		//cell对象的属性为xy、node、type
@@ -118,6 +118,7 @@ Game.Piece.prototype.destroy = function() {
 	if (this.node) { this.node.parentNode.removeChild(this.node); }
 }
 
+//构造滑块及每一部分，实际是把node属性填充
 Game.Piece.prototype.build = function(parent) {
 	this.node = document.createElement("div");
 	this.node.classList.add("piece");
@@ -127,9 +128,10 @@ Game.Piece.prototype.build = function(parent) {
 	return this;
 }
 
+//测试滑块的每个部分是否超出游戏区域
 Game.Piece.prototype.fits = function(pit) {
 	for (var p in this.cells) {
-		var xy = this.cells[p].xy.plus(this.xy);
+		var xy = this.cells[p].xy.plus(this.xy);//出现的位置和滑块各部分大小相加，保证不出游戏区域
 
 		if (xy.x < 0 || xy.x >= Game.WIDTH) { return false; }
 		if (xy.y < 0) { return false; }
@@ -155,6 +157,7 @@ Game.Piece.prototype.rotate = function(direction) {
 	return this;
 }
 
+//将滑块定位到游戏区域中间
 Game.Piece.prototype.center = function() {
 	this.xy = new XY(Game.WIDTH/2, Game.DEPTH-1);
 	return this;
