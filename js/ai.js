@@ -3,7 +3,7 @@ Game.AI = {}
 Game.AI.findBestPosition = function(pit, piece) {
 	pit = pit.clone();
 	piece = piece.clone();
-	piece.center();//将滑块定位到游戏区域中间，此时piece的XY属性有非0值
+	piece.center();//将滑块定位到游戏区域中间，此时piece的xy属性有非0值
 	
 	//不断左移调整
 	var left = new XY(-1, 0);
@@ -41,6 +41,7 @@ Game.AI.findBestPosition = function(pit, piece) {
 	}
 }
 
+//似乎用于随机出滑块的方向
 Game.AI.findBestPositionRotation = function(pit, piece) {
 	var bestScore = Infinity;
 	var bestRotations = [];
@@ -76,6 +77,7 @@ Game.AI.scoreTypes = function(pit, types) {
 			type: "i"
 		*/
 		var piece = new Game.Piece(type);
+		//输出滑块的分值
 		scores[type] = this.findBestPositionRotation(pit, piece).score;
 	}, this);
 

@@ -15,6 +15,7 @@ Object.defineProperty(Game.Cell.prototype, "xy", {
 	}
 });
 
+//构造滑块的每一部分，实际是把node属性填充
 Game.Cell.prototype.build = function(parent) {
 	this.node = document.createElement("div");
 	this.node.classList.add("cell");

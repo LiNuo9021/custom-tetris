@@ -1,9 +1,7 @@
 -文件结构
 game.js 定义游戏全局变量Game，所有的对象都是它的属性
 	
-app.js
-	首页元素控制、游戏模式
-	切换角色/开始游戏，都会触发Game.App.prototype.handleEvent
+app.js 首页元素控制、游戏模式
 
 engine.js 游戏引擎
 
@@ -14,10 +12,8 @@ ai.js
 gallery.js 右侧剩余滑块
 
 attacker.ai.js 
-	使用setInterval循环调用
 
 defender.human.js 人的防守角色
-	包含各种键盘事件：旋转，左移，右移，下坠
 
 pit.js 20行10列的游戏空间
 
@@ -40,17 +36,41 @@ Game.App.prototype.handleEvent（因为new Game.app()时，为play按钮绑定�
 					获取键盘事件							
 			this._createAttacker(this._select.attacker.value)
 				new 进攻对象
-					setInterval(this._poll.bind(this), Game.INTERVAL_ATTACKER)这里是单线程，会等待_start方法执行完毕后，再执行Attacker的_poll
+					setInterval(this._poll.bind(this), Game.INTERVAL_ATTACKER)//这里是单线程，会等待_start方法执行完毕后，再执行Attacker的_poll
 						Game.Attacker.AI.prototype._poll
 
 
---Game.Attacker.AI.prototype._poll到滑块落下
+--Game.Attacker.AI.prototype._poll到滑块出现
 Game.AI.scoreTypes(pit, avail)
+//这里算出每个滑块的分数，每次都是一样的
 	new Game.Piece(type)
 		var cell = new Game.Cell(xy, type);
 		this.cells[xy] = cell;
 	scores[type] = this.findBestPositionRotation(pit, piece).score;
 		this.findBestPosition(pit, tmpPiece)
+this._engine.setNextType(type);
+	this._useNextType(); 
+		nextPiece.build(this.pit.node);//这句话之后，滑块构造完毕并出现在游戏区域正中
+
+
+--滑块出现到落下，2条线索
+NO.1
+nextPiece.build(this.pit.node);//这句话之后，滑块构造完毕并出现在游戏区域正中
+this._start();
+	this._interval = setInterval(this._tick.bind(this), Game.INTERVAL_ENGINE);
+		Game.Engine.prototype._tick = function() {}//滑块的bottom－25px
+		//这里又是单线程执行，所以先打断点到_tick————会在第二个滑块已确定时，即_poll中next有值时，执行
+			this._piece.xy = this._piece.xy.plus(gravity);//这句话，会使滑块下落，其实就是改变bottom属性
+
+NO.2
+Game.Attacker.AI.prototype._poll
+//在第一个滑块出现之后，_poll第二次执行，此时会走if(current)，即下面的代码	
+	var best = Game.AI.findBestPositionRotation(pit, current);
+	pit.drop(current);
+	//这些是第一个滑块下落的准备，之后的代码是准备第二个滑块
+
+
+
 
 
 
