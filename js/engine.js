@@ -88,9 +88,9 @@ Game.Engine.prototype.shift = function(direction) {
  */
 Game.Engine.prototype._drop = function() {
 	this._dropping = false;
-	var removed = this.pit.drop(this._piece);
+	var removed = this.pit.drop(this._piece);//计算删除数
 	this._piece = null;
-	this._setScore(this._status.score + this._computeScore(removed));
+	this._setScore(this._status.score + this._computeScore(removed));//每次下落都更新分数：已有分数＋消除分数
 	if (this._nextType) { this._useNextType(); }
 }
 

@@ -70,6 +70,19 @@ Game.Attacker.AI.prototype._poll
 	//这些是第一个滑块下落的准备，之后的代码是准备第二个滑块
 
 
+－－消除滑块
+Game.Engine.prototype._drop
+每次滑块触底触发该函数
+	var removed = this.pit.drop(this._piece);//删除行，并计算删除行数，并让上方滑块下落
+			return this._cleanup();//删除行和上方滑块下落，都在这个方法里
+
+
+	this._setScore(this._status.score + this._computeScore(removed));//每次下落都更新分数：已有分数＋消除分数
+
+
+
+
+
 
 
 

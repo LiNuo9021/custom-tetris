@@ -100,7 +100,7 @@ Game.Pit.prototype.drop = function(piece) {
 	}
 	piece.xy = piece.xy.minus(gravity);
 
-	for (var p in piece.cells) {
+	for (var p in piece.cells) { //piece.cells是所有已有滑块的｛坐标数组，方块对象｝
 		var cell = piece.cells[p];
 		var xy = piece.xy.plus(cell.xy);
 
