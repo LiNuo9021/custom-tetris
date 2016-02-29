@@ -1,5 +1,6 @@
 Game.Attacker.AI = function(engine) {
 	//知识点：call()
+	//解：Game.Attacker相当于是Game.Player的之类
 	Game.Player.call(this, engine);//给该对象赋引擎
 	this._lastType = "";
 	//知识点：setInterval()————每隔100ms，就绑定一次_poll

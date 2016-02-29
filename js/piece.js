@@ -1,5 +1,6 @@
 Game.Piece = function(type) {
 	//知识点：this.constructor
+	//解：this代表Game.Piece的实例，它的原型有个属性是constructor，指向构造函数（也是个对象），此处DEF是它的属性
 	var def = this.constructor.DEF[type];
 	if (!def) { throw new Error("Piece '" + type + "' does not exist"); }
 
