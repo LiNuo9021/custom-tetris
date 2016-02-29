@@ -2,7 +2,7 @@ Game.Attacker.AI = function(engine) {
 	//知识点：call()
 	Game.Player.call(this, engine);//给该对象赋引擎
 	this._lastType = "";
-	//知识点：setInterval()
+	//知识点：setInterval()————每隔100ms，就绑定一次_poll
 	//知识点：bind()
 	this._interval = setInterval(this._poll.bind(this), Game.INTERVAL_ATTACKER);//周期性下降滑块
 }
