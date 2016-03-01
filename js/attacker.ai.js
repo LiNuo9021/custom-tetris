@@ -65,7 +65,9 @@ Game.Attacker.AI.prototype._poll = function() {
 	}
 
 	//随机获取方块
-	var type = worstTypes.random();
+	//改造：不先出最高分数，而是随机挑选
+	// var type = worstTypes.random();
+	var type = Object.keys(scores).random();
 	this._lastType = type;
 	this._engine.setNextType(type);//向_availableTypes放置滑块及其数量，第一次执行后，游戏区域顶部会出现+滑块
 }

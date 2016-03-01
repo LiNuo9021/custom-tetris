@@ -81,9 +81,16 @@ Game.Engine.prototype._drop
 
 
 
-
-
-
+－－滑块置顶
+Game.Engine.prototype._useNextType
+	//如果滑块在游戏区域内，则开始游戏；否则游戏结束
+	if (nextPiece.fits(this.pit)) {
+		this._piece = nextPiece;
+		this._nextType = "";
+		this._start();
+	} else { /* game over */
+		this._setPlaying(false);
+	}
 
 
 
