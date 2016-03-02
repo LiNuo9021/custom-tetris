@@ -128,33 +128,34 @@ Game.Pit.prototype._cleanup = function() {
 	var result = 0;
 
 	for (var j=0;j<Game.DEPTH;j++) {
-		if (this.rows[j] < Game.WIDTH) { continue; }
+		if (this.rows[j] < Game.WIDTH) { continue; }//如果本行没填满，则直接跳过循环
 
 		/* remove this row, adjust all other values, update cols/rows accordingly */
 
-		this.rows.splice(j, 1);
-		this.rows.push(0);
-		this.cols = this.cols.map(function(col) { return 0; });
+		//知识点II：splice
+		this.rows.splice(j, 1);//在rows中清除此行
+		this.rows.push(0);//在rows末尾增加空行
+		this.cols = this.cols.map(function(col) { return 0; });//创建新数组，每一项为0
 
 		var cells = {};
 		for (var p in this.cells) {
 			var cell = this.cells[p];
 			var xy = cell.xy;
 
-			if (xy.y == j) { /* removed row */
+			if (xy.y == j) { //j记录了要删除的行号，纵坐标与j相等，方块被删除
 				if (this.node && cell.node) { this.node.removeChild(cell.node); }
 				continue;
 			} 
-			if (xy.y > j) { xy = new XY(xy.x, xy.y-1); } /* lower xy */
+			if (xy.y > j) { xy = new XY(xy.x, xy.y-1); } //纵坐标大于j，方块下降
 
 			cell.xy = xy;
 			cells[xy] = cell;
 			this.cols[xy.x] = Math.max(this.cols[xy.x], xy.y+1);
 		}
-		this.cells = cells;
+		this.cells = cells;//更新对象的cells
 
-		result++;
-		j--;
+		result++;//消除的行数
+		j--;//因为要减行，所以这里也要减1
 	}
 
 	return result;//第一次为0
