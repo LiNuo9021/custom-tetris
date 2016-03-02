@@ -97,16 +97,16 @@ Game.Engine.prototype._drop
 	this._setScore(this._status.score + this._computeScore(removed));//每次下落都更新分数：已有分数＋消除分数
 
 
-
-
-
--改进
-滑块每次出现的顺序都是一样的
-
-
-
-
-
+－－滑块置顶
+Game.Engine.prototype._useNextType
+	//如果滑块在游戏区域内，则开始游戏；否则游戏结束
+	if (nextPiece.fits(this.pit)) {
+		this._piece = nextPiece;
+		this._nextType = "";
+		this._start();
+	} else { /* game over */
+		this._setPlaying(false);
+	}
 
 
 
