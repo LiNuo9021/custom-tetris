@@ -5,4 +5,4 @@ Game.Player = function(engine) {
 Game.Player.prototype.destroy = function() {
 }
 
-Game.Attacker.Network = Game.Defender.Network = Game.Player;
+// Game.Attacker.Network = Game.Defender.Network = Game.Player;

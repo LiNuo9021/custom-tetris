@@ -1,0 +1,169 @@
+#记录所有对象的所有属性；如有必要，后期使用UML工具
+
+Game.App
+	Game.Engine
+		Game.Gallery
+		Game.Pit
+
+Game.Defender.Human
+	Game.Player
+
+Game.Attacker.AI
+	Game.Player
+
+－－－－－－－－－－－
+－－－－－－－－－－－
+Game
+	P
+		DEPTH
+		WIDTH
+		CELL
+		INTERVAL_ENGINE
+		INTERVAL_ATTACKER
+		INTERVAL_DEFENDER
+		INTERVAL_DROP
+		Attacker
+		Defender
+
+－－－－－－－－－－－
+Game.App
+	P
+		engine
+		_dom
+			left
+			right
+	M
+		_start
+
+－－－－－－－－－－－
+Game.Engine
+	P
+		_status
+			score
+			playing
+		_interval setInterval的返回值，滑块是否在下落状态
+		dropping
+		_availableTypes 存放当前一批滑块及剩余数量
+		gallery
+		pit
+		_piece 正在下落的滑块
+		_nextType 即将下落的滑块
+	M
+		setNextType
+		getAvailableTypes
+		getPiece
+		getStatus
+		getNextType
+		drop
+		rotate
+		shift
+		_drop
+		_refreshAvailable
+		_useNextType
+		_setScore
+		_tick
+		_computeScore
+		_setPlaying
+		_start
+		_stop
+
+－－－－－－－－－－－
+Game.Gallery
+	P
+		_engine
+		pieces 仓库中的所有剩余滑块DOM
+		amounts 每个滑块的剩余数量
+		node 仓库DOM
+	M
+		sync
+		_build
+		_buildPiece
+
+－－－－－－－－－－－
+Game.Pit
+	P
+		cells 
+		cols 每列的滑块数
+		rows 每行的滑块数
+		node 游戏区域DOM
+	M
+		clone
+		build
+		toJSON
+		fromJSON
+		getScore
+		drop
+		_cleanup
+
+－－－－－－－－－－－
+Game.Player
+	P
+		_engine
+	M
+		destroy
+
+－－－－－－－－－－－
+Game.Defender.Human
+	M
+		destroy
+		handleEvent
+
+－－－－－－－－－－－
+Game.Attacker.AI
+	P
+		_lastType
+		_interval
+	M
+		destroy
+		_poll
+
+－－－－－－－－－－－
+Game.Piece
+	P
+		type
+		xy
+		node 
+		cells {0,0: Game.Cell , ...}格式的对象
+		id 随机数
+	M
+		toString
+		toJSON
+		fromJSON
+		destroy
+		build
+		fits
+		rotate
+		center
+		clone
+		_position
+	Game.Piece.DEF	
+	
+－－－－－－－－－－－
+Game.Cell
+	P
+		xy
+		type
+		node
+	M
+		build
+		clone
+		_position
+
+－－－－－－－－－－－
+XY
+	P
+		x
+		y
+	M
+		fromString
+		toString
+		plus
+		minus
+		clone
+
+
+
+
+
+
+

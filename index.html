@@ -19,29 +19,18 @@
 		<script src="js/app.js"></script>
 		<link rel="stylesheet" href="css/style.css" type="text/css" />
 	</head>
-	<body class="mode">
+	<body class="local">
 		<div id="left"></div>
 		<div id="right"></div>
 		<div id="info">
 			<p>Score: <span id="score"></span></p>
 			<p>Status: <span id="status"></span></p>
 		</div>
-		<div id="setup">
+		<div id="setup" class="playing">
 			<h1>Custom Tetris</h1>
-			<button id="play">Play!</button>
-			<div id="attacker">
-				<span>Attacker: </span><select>
-					<option value="AI">AI</option>
-				</select>
-			</div>
-			<div id="defender">
-				<span>Defender: </span><select>
-					<option value="Human">Human</option>
-				</select>
-			</div>
 		</div>
 		<script>
-			new Game.App();
+			var app = new Game.App();
 		</script>
 		<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
 	</body>
