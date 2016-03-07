@@ -1,0 +1,32 @@
+#分解每个动作，只写到方法名
+
+AI
+	滑块出现在游戏区域
+
+	滑块下落
+
+	滑块触底
+
+	滑块消除
+
+	滑块置顶
+
+人
+	翻转滑块
+		Game.Defender.Human.prototype.handleEvent
+			Game.Engine.prototype.rotate
+				Game.Piece.prototype.rotate
+				Game.Piece.prototype.fits
+					XY.prototype.plus
+
+	加速滑块
+		Game.Defender.Human.prototype.handleEvent
+			Game.Engine.prototype.shift
+				Game.Piece.prototype.fits
+					XY.prototype.plus
+				XY.prototype.plus
+				XY.prototype.minus
+
+
+
+	左右移动滑块

@@ -133,6 +133,10 @@ Game.Piece
 		build
 		fits
 		rotate
+			by
+				Game.Engine.prototype.rotate
+					Game.Defender.Human.prototype.handleEvent	人－翻转滑块
+				Game.AI.findBestPositionRotation
 		center
 		clone
 		_position
