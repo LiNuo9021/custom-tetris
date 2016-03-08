@@ -129,19 +129,20 @@ Game.Piece.prototype.build = function(parent) {
 	return this;
 }
 
-//测试滑块的每个部分是否超出游戏区域
+//检测滑块的每个部分是否超出游戏区域，是否接触到别的滑块
 Game.Piece.prototype.fits = function(pit) {
 	for (var p in this.cells) {
 		var xy = this.cells[p].xy.plus(this.xy);//出现的位置和滑块各部分大小相加，保证不出游戏区域
 
 		if (xy.x < 0 || xy.x >= Game.WIDTH) { return false; }
 		if (xy.y < 0) { return false; }
-		if (pit.cells[xy]) { return false; }
+		if (pit.cells[xy]) { return false; }//判断是否与别的滑块元素重叠，如果重叠，则认为已经接触别的滑块
 	}
 
 	return true;
 }
 
+//滑块翻转的算法，回归数学
 Game.Piece.prototype.rotate = function(direction) {
 	var sign = (direction > 0 ? new XY(-1, 1) : new XY(1, -1));
 	var newCells = {};
@@ -153,9 +154,9 @@ Game.Piece.prototype.rotate = function(direction) {
 		cell.xy = nxy;
 		newCells[nxy] = cell;
 	}
-	this.cells = newCells;
+	this.cells = newCells;//对象被改变了
 
-	return this;
+	return this;//返回改变后的对象
 }
 
 //将滑块定位到游戏区域中间

@@ -21,6 +21,26 @@ AI
 
 	加速滑块
 		Game.Defender.Human.prototype.handleEvent
+			Game.Engine.prototype.drop
+				Game.Piece.prototype.fits
+					XY.prototype.plus
+				XY.prototype.plus
+				XY.prototype.minus
+				Game.Engine.prototype._stop
+				Game.Engine.prototype._drop
+					Game.Pit.prototype.drop
+						Game.Piece.prototype.fits
+							XY.prototype.plus
+						XY.prototype.plus
+						XY.prototype.minus
+						Game.Pit.prototype._cleanup
+					Game.Engine.prototype._setScore
+					Game.Engine.prototype._computeScore
+					Game.Engine.prototype._useNextType
+						复杂，暂时不写了，详见AI－滑块下落	
+
+	左右移动滑块
+		Game.Defender.Human.prototype.handleEvent
 			Game.Engine.prototype.shift
 				Game.Piece.prototype.fits
 					XY.prototype.plus
@@ -28,5 +48,3 @@ AI
 				XY.prototype.minus
 
 
-
-	左右移动滑块

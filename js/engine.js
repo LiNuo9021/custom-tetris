@@ -53,14 +53,16 @@ Game.Engine.prototype.getNextType = function() {
 	return this._nextType;
 }
 
+//滑块加速下落
 Game.Engine.prototype.drop = function() {
 	if (!this._piece || this._dropping) { return; }
 
 	var gravity = new XY(0, -1);
+	//只要滑块还在区域内，就循环加速
 	while (this._piece.fits(this.pit)) {
 		this._piece.xy = this._piece.xy.plus(gravity);
 	}
-	this._piece.xy = this._piece.xy.minus(gravity);
+	this._piece.xy = this._piece.xy.minus(gravity);//因为fits()会在两个滑块元素接触后return false
 
 	this._stop();
 	this._dropping = true;
@@ -68,24 +70,23 @@ Game.Engine.prototype.drop = function() {
 	return this;
 }
 
+//翻转滑块：放在了引擎对象里，而不是滑块对象里————因为不只是要翻转滑块，还要对游戏的状态、是否在游戏区域进行校验
 Game.Engine.prototype.rotate = function() {
 	if (!this._piece || this._dropping) { return; }
 	this._piece.rotate(+1);
 	if (!this._piece.fits(this.pit)) { this._piece.rotate(-1); }
 	return this;
 }
-
+//平移滑块：同样，没有放在滑块对象里————理由同上
 Game.Engine.prototype.shift = function(direction) {
 	if (!this._piece || this._dropping) { return; }
 	var xy = new XY(direction, 0);
-	this._piece.xy = this._piece.xy.plus(xy);
+	this._piece.xy = this._piece.xy.plus(xy);//oo思想
 	if (!this._piece.fits(this.pit)) { this._piece.xy = this._piece.xy.minus(xy); }
 	return this;
 }
 
-/**
- * After drop timeout
- */
+//上一个滑块下落停止后，计算分数、删除滑块、下滑新滑块
 Game.Engine.prototype._drop = function() {
 	this._dropping = false;
 	var removed = this.pit.drop(this._piece);//计算删除数

@@ -55,8 +55,8 @@ Game.Engine
 		getStatus
 		getNextType
 		drop
-		rotate
-		shift
+		rotate 翻转滑块
+		shift 平移滑块
 		_drop
 		_refreshAvailable
 		_useNextType
@@ -131,11 +131,13 @@ Game.Piece
 		fromJSON
 		destroy
 		build
-		fits
-		rotate
+		fits 滑块元素是否超出区域
 			by
 				Game.Engine.prototype.rotate
-					Game.Defender.Human.prototype.handleEvent	人－翻转滑块
+				Game.Engine.prototype.shift
+		rotate 滑块元素翻转
+			by
+				Game.Engine.prototype.rotate
 				Game.AI.findBestPositionRotation
 		center
 		clone
