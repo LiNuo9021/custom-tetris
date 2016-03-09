@@ -20,17 +20,32 @@ AI
 								Game.Piece.prototype.build
 									Game.Cell.prototype.build
 										Game.Cell.prototype._position
-								Game.Piece.prototype.fits
-								Game.Engine.prototype._start
-									Game.Engine.prototype._tick（setInterval）	
-
+								之后是滑块下落的代码
+								
 	滑块下落
+		Game.Engine.prototype._useNextType
+			...
+			Game.Piece.prototype.fits
+			Game.Engine.prototype._start
+				Game.Engine.prototype._tick（setInterval）
+			Game.Gallery.prototype.sync	
 
-	滑块触底
+	滑块触底or接触到其他滑块
+		Game.Engine.prototype._tick
+			Game.Piece.prototype.fits
+				Game.Engine.prototype.drop
+					参见加速滑块
 
 	滑块消除
 
+
+		Game.Pit.prototype._cleanup
+
 	滑块置顶
+		Game.Engine.prototype._useNextType
+			...
+			Game.Piece.prototype.fits 
+			Game.Engine.prototype._setPlaying
 
 人
 	翻转滑块

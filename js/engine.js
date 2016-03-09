@@ -86,7 +86,7 @@ Game.Engine.prototype.shift = function(direction) {
 	return this;
 }
 
-//上一个滑块下落停止后，计算分数、删除滑块、下滑新滑块
+//上一个滑块下落停止后调用，计算分数、删除滑块、下滑新滑块
 Game.Engine.prototype._drop = function() {
 	this._dropping = false;
 	var removed = this.pit.drop(this._piece);//计算删除数
@@ -138,33 +138,37 @@ Game.Engine.prototype._setScore = function(score) {
 	document.querySelector("#score").innerHTML = score;
 }
 
-//滑块的bottom－25px
+//滑块下移，滑块出现在游戏区域内开始调用
 Game.Engine.prototype._tick = function() {
 	var gravity = new XY(0, -1);
 	this._piece.xy = this._piece.xy.plus(gravity);
+	//如果滑块触底，则走以下逻辑
 	if (!this._piece.fits(this.pit)) {
 		this._piece.xy = this._piece.xy.minus(gravity);
 		this.drop();
 	}
 }
 
+//计算得分
 Game.Engine.prototype._computeScore = function(removed) {
 	if (!removed) { return 0; }
 	return 100 * (1 << (removed-1));
 }
 
+//设置游戏状态
 Game.Engine.prototype._setPlaying = function(playing) {
 	this._status.playing = playing;
 	document.querySelector("#status").innerHTML = (playing ? "Playing" : "GAME OVER");
 }
 
-//滑块下落的函数
+//触发滑块开始下落
 Game.Engine.prototype._start = function() {
 	if (this._interval) { return; }
 	this._interval = setInterval(this._tick.bind(this), Game.INTERVAL_ENGINE);
 	Game.INTERVAL_ENGINE -= 5;
 }
 
+//触发滑块停止下落
 Game.Engine.prototype._stop = function() {
 	if (!this._interval) { return; }
 	clearInterval(this._interval);
