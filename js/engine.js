@@ -25,7 +25,7 @@ Game.Engine = function() {
 }
 
 Game.Engine.prototype.setNextType = function(nextType) {
-	var avail = this._availableTypes[nextType] || 0;
+	var avail = this._availableTypes[nextType] || 0;//此类型滑块的剩余数量
 	if (avail < 1) { return; }
 
 	this._nextType = nextType;
@@ -95,7 +95,7 @@ Game.Engine.prototype._drop = function() {
 	if (this._nextType) { this._useNextType(); }
 }
 
-
+//将_availableTypes初始化
 Game.Engine.prototype._refreshAvailable = function() {
 	for (var type in Game.Piece.DEF) {
 		this._availableTypes[type] = Game.Piece.DEF[type].avail;
@@ -111,6 +111,8 @@ Game.Engine.prototype._useNextType = function() {
 	} else {
 		delete this._availableTypes[this._nextType];
 	}
+
+	//如果没有滑块了，则重新初始化
 	if (!Object.keys(this._availableTypes).length) { 
 		this._refreshAvailable(); 
 	}

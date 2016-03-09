@@ -119,13 +119,15 @@ Game.Piece.prototype.destroy = function() {
 	if (this.node) { this.node.parentNode.removeChild(this.node); }
 }
 
-//构造滑块及每一部分，实际是把node属性填充
+//构造滑块
 Game.Piece.prototype.build = function(parent) {
 	this.node = document.createElement("div");
 	this.node.classList.add("piece");
-	for (var p in this.cells) { this.cells[p].build(this.node); }
+	for (var p in this.cells) { 
+		this.cells[p].build(this.node); 
+	}
 	this._position();
-	parent.appendChild(this.node);
+	parent.appendChild(this.node);//这句之后，游戏区域出现滑块
 	return this;
 }
 
@@ -177,6 +179,7 @@ Game.Piece.prototype.clone = function() {
 	return clone;
 }
 
+//确定滑块的位置
 Game.Piece.prototype._position = function() {
 	this.node.style.left = (this.xy.x * Game.CELL) + "px";
 	this.node.style.bottom = (this.xy.y * Game.CELL) + "px";

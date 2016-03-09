@@ -15,7 +15,7 @@ Object.defineProperty(Game.Cell.prototype, "xy", {
 	}
 });
 
-//构造滑块的每一部分，实际是把node属性填充
+//构造滑块元素
 Game.Cell.prototype.build = function(parent) {
 	this.node = document.createElement("div");
 	this.node.classList.add("cell");
@@ -31,6 +31,7 @@ Game.Cell.prototype.clone = function() {
 	return new Game.Cell(this.xy, this.type);
 }
 
+//确定滑块元素的位置
 Game.Cell.prototype._position = function() {
 	this.node.style.left = (this.xy.x * Game.CELL) + "px";
 	this.node.style.bottom = (this.xy.y * Game.CELL) + "px";

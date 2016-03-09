@@ -2,6 +2,27 @@
 
 AI
 	滑块出现在游戏区域
+		Game.App
+			Game.App.prototype._start
+				new Game.Engine()
+				new Game.Defender["Human"](this._engine)
+				new Game.Attacker["AI"](this._engine)
+					Game.Attacker.AI.prototype._poll（setInterval）
+						Game.Engine.prototype.getNextType
+						Game.Engine.prototype.getAvailableTypes
+						Game.Engine.prototype.getPiece
+						Game.AI.scoreTypes
+							...
+						Game.Engine.prototype.setNextType
+							Game.Engine.prototype._useNextType
+								new Game.Piece
+								Game.Piece.prototype.center
+								Game.Piece.prototype.build
+									Game.Cell.prototype.build
+										Game.Cell.prototype._position
+								Game.Piece.prototype.fits
+								Game.Engine.prototype._start
+									Game.Engine.prototype._tick（setInterval）	
 
 	滑块下落
 

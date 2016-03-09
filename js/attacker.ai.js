@@ -17,6 +17,7 @@ Game.Attacker.AI.prototype.destroy = function() {
 }
 
 Game.Attacker.AI.prototype._poll = function() {
+	//有_nextType，就不执行此函数
 	var next = this._engine.getNextType();//第一、二次为""
 	if (next) { return; }
 
