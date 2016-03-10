@@ -24,6 +24,7 @@ Game.Engine = function() {
 	this.gallery.sync();
 }
 
+//为游戏区域和仓库设置下一个滑块，在攻击者_poll的时候调用
 Game.Engine.prototype.setNextType = function(nextType) {
 	var avail = this._availableTypes[nextType] || 0;//此类型滑块的剩余数量
 	if (avail < 1) { return; }
@@ -31,7 +32,7 @@ Game.Engine.prototype.setNextType = function(nextType) {
 	this._nextType = nextType;
 	if (!this._piece) { //第一次执行会走这里
 		this._useNextType(); 
-	} else { //第二次执行会走这里，会将下一个滑块在仓库区域加红
+	} else { //第二次以后执行，都会走这里，会将下一个滑块在仓库区域加红
 		this.gallery.sync();
 	}
 	return this;
@@ -53,12 +54,13 @@ Game.Engine.prototype.getNextType = function() {
 	return this._nextType;
 }
 
-//滑块加速下落
+//滑块即将落地的函数，_tick中触底、人工加速时调用
 Game.Engine.prototype.drop = function() {
 	if (!this._piece || this._dropping) { return; }
 
 	var gravity = new XY(0, -1);
-	//只要滑块还在区域内，就循环加速
+
+	//人工加速时：只要滑块还在区域内，就循环加速；触底时：只走一次循环里的代码
 	while (this._piece.fits(this.pit)) {
 		this._piece.xy = this._piece.xy.plus(gravity);
 	}
@@ -86,10 +88,10 @@ Game.Engine.prototype.shift = function(direction) {
 	return this;
 }
 
-//上一个滑块下落停止后调用，计算分数、删除滑块、下滑新滑块
+//滑块下落停止后被drop调用，计算分数、删除滑块、下滑新滑块
 Game.Engine.prototype._drop = function() {
 	this._dropping = false;
-	var removed = this.pit.drop(this._piece);//计算删除数
+	var removed = this.pit.drop(this._piece);//删除滑块、计算删除数
 	this._piece = null;
 	this._setScore(this._status.score + this._computeScore(removed));//每次下落都更新分数：已有分数＋消除分数
 	if (this._nextType) { this._useNextType(); }
@@ -102,7 +104,7 @@ Game.Engine.prototype._refreshAvailable = function() {
 	}
 }
 
-//知识点：prototype
+//初始化滑块，构造将要出现在游戏区域内的滑块，判断游戏状态，在setNextType和_drop时调用
 Game.Engine.prototype._useNextType = function() {
 	//_availableTypes存放着每种滑块的数量，这里做－1操作
 	var avail = this._availableTypes[this._nextType]-1;

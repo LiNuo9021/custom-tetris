@@ -123,9 +123,7 @@ Game.Pit.prototype.drop = function(piece) {
 	return this._cleanup();
 }
 
-/**
- * @returns {number} of cleaned rows
- */
+//清除某行并返回清除行数，每次滑块触底都会调用
 Game.Pit.prototype._cleanup = function() {
 	var result = 0;
 

@@ -65,6 +65,7 @@ Game.AI.findBestPositionRotation = function(pit, piece) {
 	return bestRotations.random();
 }
 
+//输出滑块的分数，攻击者选择滑块时调用，其实可以省略
 Game.AI.scoreTypes = function(pit, types) {
 	var scores = {};
 	//知识点：forEach()

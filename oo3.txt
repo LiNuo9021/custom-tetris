@@ -1,9 +1,9 @@
 #分解每个动作，只写到方法名
 
 AI
-	滑块出现在游戏区域
+	滑块出现在游戏区域 OK
 		Game.App
-			Game.App.prototype._start
+			Game.App.prototype._start（setTimeout）
 				new Game.Engine()
 				new Game.Defender["Human"](this._engine)
 				new Game.Attacker["AI"](this._engine)
@@ -14,15 +14,16 @@ AI
 						Game.AI.scoreTypes
 							...
 						Game.Engine.prototype.setNextType
-							Game.Engine.prototype._useNextType
+							Game.Engine.prototype._useNextType（第一次会走这个逻辑）
 								new Game.Piece
 								Game.Piece.prototype.center
 								Game.Piece.prototype.build
 									Game.Cell.prototype.build
 										Game.Cell.prototype._position
 								之后是滑块下落的代码
+							Game.Gallery.prototype.sync（第二次及以后会走这个逻辑）
 								
-	滑块下落
+	滑块下落 OK
 		Game.Engine.prototype._useNextType
 			...
 			Game.Piece.prototype.fits
@@ -30,25 +31,32 @@ AI
 				Game.Engine.prototype._tick（setInterval）
 			Game.Gallery.prototype.sync	
 
-	滑块触底or接触到其他滑块
-		Game.Engine.prototype._tick
-			Game.Piece.prototype.fits
-				Game.Engine.prototype.drop
-					参见加速滑块
-
-	滑块消除
-
-
-		Game.Pit.prototype._cleanup
-
-	滑块置顶
+	滑块置顶 OK 不fits就结束游戏
 		Game.Engine.prototype._useNextType
 			...
 			Game.Piece.prototype.fits 
 			Game.Engine.prototype._setPlaying
 
+	滑块触底or接触到其他滑块 OK
+		Game.Engine.prototype._tick（setInterval）
+			Game.Piece.prototype.fits
+				Game.Engine.prototype.drop
+					Game.Engine.prototype._stop（clearInterval）
+					Game.Engine.prototype._drop（setTimeout）
+						见滑块消除，开始计算分数、滑块消除等事宜，直到_useNextType下落新滑块
+
+	滑块消除 OK
+		见滑块触底
+			Game.Engine.prototype._drop
+				Game.Pit.prototype.drop
+					Game.Pit.prototype._cleanup
+				Game.Engine.prototype._setScore
+				Game.Engine.prototype._useNextType
+					见滑块下落的逻辑，至此完成一个循环
+						
+
 人
-	翻转滑块
+	翻转滑块 OK
 		Game.Defender.Human.prototype.handleEvent
 			Game.Engine.prototype.rotate
 				Game.Piece.prototype.rotate
@@ -63,7 +71,7 @@ AI
 				XY.prototype.plus
 				XY.prototype.minus
 				Game.Engine.prototype._stop
-				Game.Engine.prototype._drop
+				Game.Engine.prototype._drop（setTimeout）
 					Game.Pit.prototype.drop
 						Game.Piece.prototype.fits
 							XY.prototype.plus
@@ -75,7 +83,7 @@ AI
 					Game.Engine.prototype._useNextType
 						复杂，暂时不写了，详见AI－滑块下落	
 
-	左右移动滑块
+	左右移动滑块 OK
 		Game.Defender.Human.prototype.handleEvent
 			Game.Engine.prototype.shift
 				Game.Piece.prototype.fits
