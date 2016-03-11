@@ -4,6 +4,7 @@ Game.Engine = function() {
 		playing: true
 	}
 
+	this._executeCount = 0;
 	this._interval = null;
 	this._dropping = false;
 	this._availableTypes = {};
@@ -142,6 +143,8 @@ Game.Engine.prototype._setScore = function(score) {
 
 //滑块下移，滑块出现在游戏区域内开始调用
 Game.Engine.prototype._tick = function() {
+	console.log("tick executeCount: " + (++this._executeCount));
+
 	var gravity = new XY(0, -1);
 	this._piece.xy = this._piece.xy.plus(gravity);
 	//如果滑块触底，则走以下逻辑

@@ -7,7 +7,7 @@ AI
 				new Game.Engine()
 				new Game.Defender["Human"](this._engine)
 				new Game.Attacker["AI"](this._engine)
-					Game.Attacker.AI.prototype._poll（setInterval）
+					Game.Attacker.AI.prototype._poll（setInterval，100ms）
 						Game.Engine.prototype.getNextType
 						Game.Engine.prototype.getAvailableTypes
 						Game.Engine.prototype.getPiece
@@ -28,14 +28,8 @@ AI
 			...
 			Game.Piece.prototype.fits
 			Game.Engine.prototype._start
-				Game.Engine.prototype._tick（setInterval）
+				Game.Engine.prototype._tick（setInterval，500ms）
 			Game.Gallery.prototype.sync	
-
-	滑块置顶 OK 不fits就结束游戏
-		Game.Engine.prototype._useNextType
-			...
-			Game.Piece.prototype.fits 
-			Game.Engine.prototype._setPlaying
 
 	滑块触底or接触到其他滑块 OK
 		Game.Engine.prototype._tick（setInterval）
@@ -44,6 +38,12 @@ AI
 					Game.Engine.prototype._stop（clearInterval）
 					Game.Engine.prototype._drop（setTimeout）
 						见滑块消除，开始计算分数、滑块消除等事宜，直到_useNextType下落新滑块
+
+	滑块置顶 OK 不fits就结束游戏
+		Game.Engine.prototype._useNextType
+			...
+			Game.Piece.prototype.fits 
+			Game.Engine.prototype._setPlaying
 
 	滑块消除 OK
 		见滑块触底

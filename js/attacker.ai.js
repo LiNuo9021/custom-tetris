@@ -6,6 +6,7 @@ Game.Attacker.AI = function(engine) {
 	//知识点：setInterval()————每隔100ms，就绑定一次_poll
 	//知识点：bind()
 	this._interval = setInterval(this._poll.bind(this), Game.INTERVAL_ATTACKER);//周期性下降滑块
+	this._executeCount = 0;
 }
 
 Game.Attacker.AI.prototype = Object.create(Game.Player.prototype);
@@ -17,6 +18,8 @@ Game.Attacker.AI.prototype.destroy = function() {
 }
 
 Game.Attacker.AI.prototype._poll = function() {
+	console.log("poll executeCount: " + (++this._executeCount));
+
 	//有_nextType，就不执行此函数
 	var next = this._engine.getNextType();//第一、二次为""
 	if (next) { return; }
