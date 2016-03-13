@@ -89,8 +89,6 @@ Game.Pit
 	M
 		clone
 		build
-		toJSON
-		fromJSON
 		getScore
 		drop
 		_cleanup
@@ -126,9 +124,6 @@ Game.Piece
 		cells {0,0: Game.Cell , ...}格式的对象
 		id 随机数
 	M
-		toString
-		toJSON
-		fromJSON
 		destroy
 		build
 		fits 滑块元素是否超出区域
@@ -161,8 +156,6 @@ XY
 		x
 		y
 	M
-		fromString
-		toString
 		plus
 		minus
 		clone

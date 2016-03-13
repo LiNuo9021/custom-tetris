@@ -3,10 +3,10 @@ var XY = function(x, y) {
 	this.y = y || 0;
 }
 
-XY.fromString = function(str) {
-	var parts = str.split(",");
-	return new this(parseInt(parts[0]), parseInt(parts[1]));
-}
+// XY.fromString = function(str) {
+// 	var parts = str.split(",");
+// 	return new this(parseInt(parts[0]), parseInt(parts[1]));
+// }
 
 XY.prototype.toString = function() {
 	return this.x+","+this.y;

@@ -58,19 +58,6 @@ Game.Attacker.AI.prototype._poll = function() {
 	var worstScore = -Infinity;
 	var worstTypes = [];
 
-	//这段代码第一次执行，会将"+"－64筛选出来，所以每次都是最先落下加号
-	// for (var type in scores) {
-	// 	var score = scores[type];
-	// 	if (score > worstScore) {
-	// 		worstScore = score;
-	// 		worstTypes = [];
-	// 	}
-	// 	if (score == worstScore) { worstTypes.push(type); }
-	// }
-
-	//随机获取方块
-	//改造：不先出最高分数，而是随机挑选
-	// var type = worstTypes.random();
 	var type = Object.keys(scores).random();
 	this._lastType = type;
 	this._engine.setNextType(type);//向_availableTypes放置滑块及其数量，第一次执行后，游戏区域顶部会出现+滑块

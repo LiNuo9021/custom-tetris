@@ -85,36 +85,6 @@ Object.defineProperty(Game.Piece.prototype, "xy", {
 });
 
 
-Game.Piece.prototype.toString = function() {
-	return Object.keys(this.cells).join(";");
-}
-
-Game.Piece.prototype.toJSON = function() {
-	var data = {
-		type: this.type,
-		xy: this.xy.toString(),
-		id: this.id,
-		cells: {}
-	};
-	for (var p in this.cells) { data.cells[p] = 1; }
-	return data;
-}
-
-Game.Piece.prototype.fromJSON = function(data) {
-	for (var p in data.cells) {
-		if (p in this.cells) { continue; }
-		var cell = new Game.Cell(XY.fromString(p), this.type);
-		this.cells[p] = cell;
-		if (this.node) { cell.build(this.node); }
-	}
-	for (var p in this.cells) {
-		if (p in data.cells) { continue; }
-		if (this.node) { this.node.removeChild(this.cells[p].node); }
-		delete this.cells[p];
-	}
-	this.xy = XY.fromString(data.xy);
-}
-
 Game.Piece.prototype.destroy = function() {
 	if (this.node) { this.node.parentNode.removeChild(this.node); }
 }
